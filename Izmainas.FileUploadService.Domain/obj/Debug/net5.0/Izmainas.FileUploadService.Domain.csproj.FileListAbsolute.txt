@@ -1,0 +1,12 @@
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\bin\Debug\net5.0\Izmainas.FileUploadService.Domain.deps.json
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\bin\Debug\net5.0\Izmainas.FileUploadService.Domain.dll
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\bin\Debug\net5.0\ref\Izmainas.FileUploadService.Domain.dll
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\bin\Debug\net5.0\Izmainas.FileUploadService.Domain.pdb
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\obj\Debug\net5.0\Izmainas.FileUploadService.Domain.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\obj\Debug\net5.0\Izmainas.FileUploadService.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\obj\Debug\net5.0\Izmainas.FileUploadService.Domain.AssemblyInfoInputs.cache
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\obj\Debug\net5.0\Izmainas.FileUploadService.Domain.AssemblyInfo.cs
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\obj\Debug\net5.0\Izmainas.FileUploadService.Domain.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\obj\Debug\net5.0\Izmainas.FileUploadService.Domain.dll
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\obj\Debug\net5.0\ref\Izmainas.FileUploadService.Domain.dll
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.FileUploadService.Domain\obj\Debug\net5.0\Izmainas.FileUploadService.Domain.pdb
