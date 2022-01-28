@@ -16,6 +16,10 @@ namespace Izmainas.API.Data
 
         public DbSet<Note> Notes { get; set; }
 
+        public DbSet<StudentScheduleItem> StudentItems { get; set; }
+
+        public DbSet<TeacherScheduleItem> TeacherItems { get; set; }
+
         // public DbSet<Schedule> Schedules { get; set; }
 
         // // fixed

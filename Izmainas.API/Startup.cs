@@ -29,6 +29,7 @@ namespace Izmainas.API
 
             // services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<INotesRepository, NotesRepository>();
+            services.AddScoped<IScheduleImportRepository, ScheduleImportRepository>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
