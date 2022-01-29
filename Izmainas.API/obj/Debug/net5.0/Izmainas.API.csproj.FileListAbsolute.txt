@@ -62,4 +62,3 @@ C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API\obj\Debug\net5.0\Izmainas
 C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API\obj\Debug\net5.0\Izmainas.API.genruntimeconfig.cache
 C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API\bin\Debug\net5.0\Izmainas.API.Domain.dll
 C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API\bin\Debug\net5.0\Izmainas.API.Domain.pdb
-C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API\obj\Debug\net5.0\Izmainas.API.csproj.CopyComplete

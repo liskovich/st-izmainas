@@ -15,5 +15,6 @@ namespace Izmainas.API.Domain.Services
         Task PopulateTeacherSchedule(IEnumerable<TeacherScheduleItem> items);
         Task ClearStudentSchedules();
         Task ClearTeacherSchedules();
+        Task<bool> SaveChangesAsync();
     }
 }

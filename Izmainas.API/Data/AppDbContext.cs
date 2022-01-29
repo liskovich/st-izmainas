@@ -20,6 +20,15 @@ namespace Izmainas.API.Data
 
         public DbSet<TeacherScheduleItem> TeacherItems { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<StudentScheduleItem>()
+            .HasKey(s => s.Id);
+
+            modelBuilder.Entity<TeacherScheduleItem>()
+            .HasKey(t => t.Id);            
+        }
+
         // public DbSet<Schedule> Schedules { get; set; }
 
         // // fixed

@@ -19,18 +19,18 @@ namespace Izmainas.API.Services
             _context = context;
         }
 
-        public Task ClearStudentSchedules()
+        public async Task ClearStudentSchedules()
         {
             // TODO: review clear method
-            _context.StudentItems.RemoveRange();
-            return Task.CompletedTask;
+            _context.StudentItems.RemoveRange(await GetStudentSchedule());
+            await _context.SaveChangesAsync();            
         }
 
-        public Task ClearTeacherSchedules()
+        public async Task ClearTeacherSchedules()
         {
             // TODO: review clear method
-            _context.TeacherItems.RemoveRange();
-            return Task.CompletedTask;
+            _context.TeacherItems.RemoveRange(await GetTeacherSchedule());
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<StudentScheduleItem>> GetStudentSchedule([Optional] int day)
@@ -56,11 +56,18 @@ namespace Izmainas.API.Services
         public async Task PopulateStudentSchedule(IEnumerable<StudentScheduleItem> items)
         {
             await _context.StudentItems.AddRangeAsync(items);
+            await _context.SaveChangesAsync();
         }
 
         public async Task PopulateTeacherSchedule(IEnumerable<TeacherScheduleItem> items)
         {
             await _context.TeacherItems.AddRangeAsync(items);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _context.SaveChangesAsync() > 0);
         }
     }
 }
