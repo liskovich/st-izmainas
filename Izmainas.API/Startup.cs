@@ -1,7 +1,7 @@
 using System.Reflection;
 using Izmainas.API.Data;
-//using Izmainas.API.Data.Repositories;
-using Izmainas.API.Domain.Abstractions;
+using Izmainas.API.Domain.Configuration;
+using Izmainas.API.Domain.Constants;
 using Izmainas.API.Domain.Services;
 using Izmainas.API.Services;
 using Microsoft.AspNetCore.Builder;
@@ -25,18 +25,31 @@ namespace Izmainas.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<AppDbContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString(DBConstants.DBName)));
 
-            // services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            // Data operation services
             services.AddScoped<INotesRepository, NotesRepository>();
             services.AddScoped<IScheduleImportRepository, ScheduleImportRepository>();
+
+            // Data presentation services
+            services.AddScoped<IStudentScheduleService, StudentScheduleService>();
+
+            // TODO: Add teahcer schedule service !!!
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Izmainas.API", Version = "v1" });
+                var swaggerOptions = Configuration.GetSection(nameof(SwaggerOptions)).Get<SwaggerOptions>();
+                c.SwaggerDoc(
+                    swaggerOptions.Version, 
+                    new OpenApiInfo 
+                    { 
+                        Title = swaggerOptions.Title, 
+                        Version = swaggerOptions.Version 
+                    });
             });
         }
 
@@ -46,7 +59,12 @@ namespace Izmainas.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Izmainas.API v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    var swaggerOptions = Configuration.GetSection(nameof(SwaggerOptions)).Get<SwaggerOptions>();
+                    var title = swaggerOptions.Title + ' ' + swaggerOptions.Version;
+                    c.SwaggerEndpoint(swaggerOptions.Endpoint, title);
+                });
             }
 
             app.UseHttpsRedirection();

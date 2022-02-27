@@ -46,10 +46,9 @@ namespace Izmainas.API.Migrations
 
             modelBuilder.Entity("Izmainas.API.Domain.Entities.StudentScheduleItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Class")
                         .IsRequired()
@@ -72,10 +71,9 @@ namespace Izmainas.API.Migrations
 
             modelBuilder.Entity("Izmainas.API.Domain.Entities.TeacherScheduleItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Class")
                         .IsRequired()

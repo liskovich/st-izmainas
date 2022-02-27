@@ -1,4 +1,3 @@
-C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API.Domain\obj\Debug\net5.0\Izmainas.API.Domain.csproj.AssemblyReference.cache
 C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API.Domain\obj\Debug\net5.0\Izmainas.API.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API.Domain\obj\Debug\net5.0\Izmainas.API.Domain.AssemblyInfoInputs.cache
 C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API.Domain\obj\Debug\net5.0\Izmainas.API.Domain.AssemblyInfo.cs
@@ -10,3 +9,4 @@ C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API.Domain\bin\Debug\net5.0\I
 C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API.Domain\obj\Debug\net5.0\Izmainas.API.Domain.dll
 C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API.Domain\obj\Debug\net5.0\ref\Izmainas.API.Domain.dll
 C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API.Domain\obj\Debug\net5.0\Izmainas.API.Domain.pdb
+C:\Users\user\Desktop\Projects\STIzmainas\Izmainas.API.Domain\obj\Debug\net5.0\Izmainas.API.Domain.csproj.AssemblyReference.cache

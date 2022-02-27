@@ -9,5 +9,6 @@ namespace Izmainas.API.Domain.Services
     public interface INotesRepository : IRepository<Note>
     {
         Task<bool> SaveChangesAsync();
+        Task<IEnumerable<Note>> GetAllNotesByDateAsync(long date);
     }
 }

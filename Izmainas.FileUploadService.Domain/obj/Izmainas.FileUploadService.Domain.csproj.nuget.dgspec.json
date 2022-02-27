@@ -1,28 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj": {}
+    "C:\\Users\\user\\Desktop\\Export\\Ricards\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj": {
+    "C:\\Users\\user\\Desktop\\Export\\Ricards\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\Export\\Ricards\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj",
         "projectName": "Izmainas.FileUploadService.Domain",
-        "projectPath": "C:\\Users\\user\\Desktop\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj",
+        "projectPath": "C:\\Users\\user\\Desktop\\Export\\Ricards\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\obj\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\Export\\Ricards\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -72,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

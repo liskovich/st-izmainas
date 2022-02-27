@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Izmainas.API.Domain.Dtos
 {
-    public record TeacherScheduleDto(int Lesson, int Day, string TeacherName, string Class);
+    public record TeacherScheduleDto(int Lesson, int Day, string TeacherName, string Class, Guid Id);
 }

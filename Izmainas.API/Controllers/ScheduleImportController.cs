@@ -3,76 +3,79 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Izmainas.API.Domain.Constants;
-using Izmainas.API.Domain.Contracts;
+using Izmainas.API.Domain.Contracts.Admin;
+using Izmainas.API.Domain.Dtos;
 using Izmainas.API.Domain.Entities;
 using Izmainas.API.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Izmainas.API.Controllers
 {
+    /// <summary>
+    /// API controller for Imported schedules manipulation
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class ScheduleImportController : ControllerBase
     {
         private readonly IScheduleImportRepository _scheduleImportRepository;
+        private readonly IMapper _mapper;
 
-        public ScheduleImportController(IScheduleImportRepository scheduleImportRepository)
+        public ScheduleImportController(IScheduleImportRepository scheduleImportRepository, IMapper mapper)
         {
             _scheduleImportRepository = scheduleImportRepository;
+            _mapper = mapper;
         }
 
-        // TODO: replace with dto
-        [HttpGet(
-            APIRoutes.ScheduleImportRoutes.StudentSchedule, 
-            Name = nameof(GetStudentSchedulesAsync))]
-        public async Task<ActionResult<List<StudentScheduleItem>>> GetStudentSchedulesAsync(int day)
+        /// <summary>
+        /// Method used to fetch student schedules displayed on the webpage
+        /// </summary>
+        /// <param name="day">The day to return the schedule for</param>      
+        /// <returns>Success response containing student schedule list for specified day or failure status</returns>
+        [HttpGet(APIRoutes.ScheduleImportRoutes.StudentSchedule, Name = nameof(GetStudentSchedulesAsync))]
+        public async Task<ActionResult<List<StudentScheduleDto>>> GetStudentSchedulesAsync(int day)
         {
             if (day >= 1 && day <= 5)
             {
-                return Ok(await _scheduleImportRepository.GetStudentSchedule(day));
+                var result = await _scheduleImportRepository.GetStudentSchedule(day);
+                return Ok(_mapper.Map<List<StudentScheduleDto>>(result));
             }
             return BadRequest();
         }
 
-        // TODO: replace with dto
-        [HttpGet(
-            APIRoutes.ScheduleImportRoutes.TeacherSchedule,
-            Name = nameof(GetTeacherSchedulesAsync))]
-        public async Task<ActionResult<List<TeacherScheduleItem>>> GetTeacherSchedulesAsync(int day)
+        /// <summary>
+        /// Method used to fetch teacher schedules displayed on the webpage
+        /// </summary>
+        /// <param name="day">The day to return the schedule for</param>
+        /// <returns>Success response containing teacher schedule list for specified day or failure status</returns>
+        [HttpGet(APIRoutes.ScheduleImportRoutes.TeacherSchedule, Name = nameof(GetTeacherSchedulesAsync))]        
+        public async Task<ActionResult<List<TeacherScheduleDto>>> GetTeacherSchedulesAsync(int day)
         {
             if (day >= 1 && day <= 5)
             {
-                return Ok(await _scheduleImportRepository.GetTeacherSchedule(day));
+                var result = await _scheduleImportRepository.GetTeacherSchedule(day);
+                return Ok(_mapper.Map<List<TeacherScheduleDto>>(result));
             }
             return BadRequest();
         }
 
-        // TODO: replace with dto
+        /// <summary>
+        /// Method used to populate database with imported student schedule
+        /// </summary>
+        /// <param name="request">Payload containing student schedule</param>
+        /// <returns>Success response of student schedule import or failure status</returns>
         [HttpPost(APIRoutes.ScheduleImportRoutes.StudentScheduleImport)]
         public async Task<IActionResult> PopulateStudentSchedulesAsync(StudentScheduleRequest request)
         {
             if (request.StudentScheduleItems is not null)
             {
-                // TODO: configure automapper
-                var items = new List<StudentScheduleItem>();                
-                foreach (var dto in request.StudentScheduleItems)
-                {
-                    var item = new StudentScheduleItem()
-                    {
-                        Class = dto.Class,
-                        Lesson = dto.Lesson,
-                        Subject = dto.Subject,
-                        Day = dto.Day
-                    };
-                    items.Add(item);
-                }
-                await _scheduleImportRepository.PopulateStudentSchedule(items);
-                var test = await _scheduleImportRepository.SaveChangesAsync();
-                if (test)
-                {
-                    System.Console.WriteLine("successfully save");
-                }
+                var items = _mapper.Map<List<StudentScheduleItem>>(request.StudentScheduleItems);
+
+                await _scheduleImportRepository.PopulateStudentSchedule(items);                
+                await _scheduleImportRepository.SaveChangesAsync();
+
                 // TODO: return correct data
                 //return CreatedAtRoute("GetStudentSchedulesAsync", items.Count);
 
@@ -82,27 +85,21 @@ namespace Izmainas.API.Controllers
             return BadRequest();
         }
 
-        // TODO: replace with dto
+        /// <summary>
+        /// Method used to populate database with imported teacher schedule
+        /// </summary>
+        /// <param name="request">Payload containing teacher schedule</param>
+        /// <returns>Success response of teacher schedule import or failure status</returns>
         [HttpPost(APIRoutes.ScheduleImportRoutes.TeacherScheduleImport)]
         public async Task<IActionResult> PopulateTeacherSchedulesAsync(TeacherScheduleRequest request)
         {
             if (request.TeacherScheduleItems is not null)
             {
-                // TODO: configure automapper
-                var items = new List<TeacherScheduleItem>();                
-                foreach (var dto in request.TeacherScheduleItems)
-                {
-                    var item = new TeacherScheduleItem()
-                    {
-                        Class = dto.Class,
-                        Lesson = dto.Lesson,
-                        TeacherName = dto.TeacherName,
-                        Day = dto.Day
-                    };
-                    items.Add(item);
-                }
+                var items = _mapper.Map<List<TeacherScheduleItem>>(request.TeacherScheduleItems);
+
                 await _scheduleImportRepository.PopulateTeacherSchedule(items);
                 await _scheduleImportRepository.SaveChangesAsync();
+
                 // TODO: return correct data
                 //return CreatedAtRoute("GetTeacherSchedulesAsync", items.Count);
                 
@@ -112,6 +109,10 @@ namespace Izmainas.API.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Method used to clear database from old student schedule version
+        /// </summary>
+        /// <returns>No content message or failure status</returns>
         [HttpDelete(APIRoutes.ScheduleImportRoutes.StudentScheduleImport)]
         public async Task<ActionResult> ClearStudentSchedulesAsync()
         {
@@ -126,6 +127,10 @@ namespace Izmainas.API.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Method used to clear database from old teacher schedule version
+        /// </summary>
+        /// <returns>No content message or failure status</returns>
         [HttpDelete(APIRoutes.ScheduleImportRoutes.TeacherScheduleImport)]
         public async Task<ActionResult> ClearTeacherSchedulesAsync()
         {

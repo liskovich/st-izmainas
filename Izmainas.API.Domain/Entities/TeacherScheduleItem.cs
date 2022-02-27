@@ -9,7 +9,7 @@ namespace Izmainas.API.Domain.Entities
     public class TeacherScheduleItem
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         
         [Required]
         // string

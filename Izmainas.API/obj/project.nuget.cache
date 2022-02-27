@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CqBJHvTag8urXV2umW1/SYztQvAHb3z/h6+niVSQCqhg2nP/AH4haipv1JS+c6+wXcQIa76W1qtOiwh016zG3g==",
+  "dgSpecHash": "///sz++qXWejRMS3bF8Mvt8rvVhoYzHvrW3LVHk1CzfTI1LSpGr/EZN6m4Q1zD75cMiBpExGZPzmGpnUCxMm8g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\Desktop\\Projects\\STIzmainas\\Izmainas.API\\Izmainas.API.csproj",
+  "projectFilePath": "C:\\Users\\user\\Desktop\\Export\\Ricards\\Projects\\STIzmainas\\Izmainas.API\\Izmainas.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

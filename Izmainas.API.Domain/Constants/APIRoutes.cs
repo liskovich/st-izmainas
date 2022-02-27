@@ -1,18 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Izmainas.API.Domain.Constants
 {
+    /// <summary>
+    /// Endpoints for API access
+    /// </summary>
     public class APIRoutes
     {
+        /// <summary>
+        /// API endpoints for schedule import
+        /// </summary>
         public static class ScheduleImportRoutes
         {
-            public const string StudentSchedule = "/student-schedule/{day:int}";
-            public const string TeacherSchedule = "/teacher-schedule/{day:int}";
-            public const string StudentScheduleImport = "/student-schedule";
-            public const string TeacherScheduleImport = "/teacher-schedule";
+            public const string StudentSchedule = "studentSchedule/{day:int}";
+            public const string TeacherSchedule = "teacherSchedule/{day:int}";
+            public const string StudentScheduleImport = "studentSchedule";
+            public const string TeacherScheduleImport = "teacherSchedule";
         }
     }
 }

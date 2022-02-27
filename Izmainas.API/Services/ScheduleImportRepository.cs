@@ -10,6 +10,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Izmainas.API.Services
 {
+    /// <summary>
+    /// Internal service used to operate with Imported schedule in persistance level
+    /// </summary>
     public class ScheduleImportRepository : IScheduleImportRepository
     {
         private readonly AppDbContext _context;
@@ -19,6 +22,9 @@ namespace Izmainas.API.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Method used for deleting all student schedules from database
+        /// </summary>
         public async Task ClearStudentSchedules()
         {
             // TODO: review clear method
@@ -26,6 +32,9 @@ namespace Izmainas.API.Services
             await _context.SaveChangesAsync();            
         }
 
+        /// <summary>
+        /// Method used for deleting all teacher schedules from database
+        /// </summary>
         public async Task ClearTeacherSchedules()
         {
             // TODO: review clear method
@@ -33,6 +42,11 @@ namespace Izmainas.API.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Method used for retrieving all student schedules from database by day
+        /// </summary>
+        /// <param name="day">Identifier for student schedule lookup</param>
+        /// <returns>A list of student schedules</returns>
         public async Task<IEnumerable<StudentScheduleItem>> GetStudentSchedule([Optional] int day)
         {
             // TODO: check optional parameter specific
@@ -43,6 +57,11 @@ namespace Izmainas.API.Services
             return await _context.StudentItems.ToListAsync();
         }
 
+        /// <summary>
+        /// Method used for retrieving all teacher schedules from database by day
+        /// </summary>
+        /// <param name="day">Identifier for teacher schedule lookup</param>
+        /// <returns>A list of teacher schedules</returns>
         public async Task<IEnumerable<TeacherScheduleItem>> GetTeacherSchedule([Optional] int day)
         {
             // TODO: check optional parameter specific
@@ -53,18 +72,31 @@ namespace Izmainas.API.Services
             return await _context.TeacherItems.ToListAsync();
         }
 
+        /// <summary>
+        /// Method used to populate database with imported student schedules
+        /// </summary>
+        /// <param name="items">Imported student schedule data to save</param>
         public async Task PopulateStudentSchedule(IEnumerable<StudentScheduleItem> items)
         {
             await _context.StudentItems.AddRangeAsync(items);
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Method used to populate database with imported teacher schedules
+        /// </summary>
+        /// <param name="items">Imported teacher schedule data to save</param>
         public async Task PopulateTeacherSchedule(IEnumerable<TeacherScheduleItem> items)
         {
             await _context.TeacherItems.AddRangeAsync(items);
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Save changes made to database
+        /// </summary>
+        /// <returns>Operation result (bool)</returns>
+        /// <remarks>It is necessary to call this method on all operations that mutate data</remarks>
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() > 0);

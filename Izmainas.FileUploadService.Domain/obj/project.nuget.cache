@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "p0nkUSc1UMTkESs4mj6Fvx34Oh4ELXG5NpEo+1gg+SOvCuje9HoNE/7ep4kJ7393+FObiR6scKa7KOwjm1MXSg==",
+  "dgSpecHash": "o4sgrrMvEY/yj/+KuxSz92kgKsGX+ZVNL20gdQWPkGztxO2mx7harkwXoxae7ZLnDSEqIY0mHLZY0CHMio5pJQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\Desktop\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj",
+  "projectFilePath": "C:\\Users\\user\\Desktop\\Export\\Ricards\\Projects\\STIzmainas\\Izmainas.FileUploadService.Domain\\Izmainas.FileUploadService.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
