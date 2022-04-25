@@ -69,20 +69,21 @@ namespace Izmainas.API.Controllers
         [HttpPost(APIRoutes.ScheduleImportRoutes.StudentScheduleImport)]
         public async Task<IActionResult> PopulateStudentSchedulesAsync(StudentScheduleRequest request)
         {
-            if (request.StudentScheduleItems is not null)
+            if (request.StudentScheduleItems == null)
             {
-                var items = _mapper.Map<List<StudentScheduleItem>>(request.StudentScheduleItems);
-
-                await _scheduleImportRepository.PopulateStudentSchedule(items);                
-                await _scheduleImportRepository.SaveChangesAsync();
-
-                // TODO: return correct data
-                //return CreatedAtRoute("GetStudentSchedulesAsync", items.Count);
-
-                // TODO: review created result
-                return Ok();
+                return BadRequest();
             }
-            return BadRequest();
+            
+            var items = _mapper.Map<List<StudentScheduleItem>>(request.StudentScheduleItems);
+
+            await _scheduleImportRepository.PopulateStudentSchedule(items);                
+            await _scheduleImportRepository.SaveChangesAsync();
+
+            // TODO: return correct data
+            //return CreatedAtRoute("GetStudentSchedulesAsync", items.Count);
+
+            // TODO: review created result
+            return Ok();            
         }
 
         /// <summary>
@@ -93,20 +94,21 @@ namespace Izmainas.API.Controllers
         [HttpPost(APIRoutes.ScheduleImportRoutes.TeacherScheduleImport)]
         public async Task<IActionResult> PopulateTeacherSchedulesAsync(TeacherScheduleRequest request)
         {
-            if (request.TeacherScheduleItems is not null)
+            if (request.TeacherScheduleItems == null)
             {
-                var items = _mapper.Map<List<TeacherScheduleItem>>(request.TeacherScheduleItems);
-
-                await _scheduleImportRepository.PopulateTeacherSchedule(items);
-                await _scheduleImportRepository.SaveChangesAsync();
-
-                // TODO: return correct data
-                //return CreatedAtRoute("GetTeacherSchedulesAsync", items.Count);
-                
-                // TODO: review created result
-                return Ok();
+                return BadRequest();
             }
-            return BadRequest();
+
+            var items = _mapper.Map<List<TeacherScheduleItem>>(request.TeacherScheduleItems);
+
+            await _scheduleImportRepository.PopulateTeacherSchedule(items);
+            await _scheduleImportRepository.SaveChangesAsync();
+
+            // TODO: return correct data
+            //return CreatedAtRoute("GetTeacherSchedulesAsync", items.Count);
+            
+            // TODO: review created result
+            return Ok();            
         }
 
         /// <summary>
@@ -117,14 +119,15 @@ namespace Izmainas.API.Controllers
         public async Task<ActionResult> ClearStudentSchedulesAsync()
         {
             var items = await _scheduleImportRepository.GetStudentSchedule();
-            if (items is not null)
+            if (items == null)
             {
-                await _scheduleImportRepository.ClearStudentSchedules();
-                await _scheduleImportRepository.SaveChangesAsync();
-                return NoContent();
+                return BadRequest();
             }
+            await _scheduleImportRepository.ClearStudentSchedules();
+            await _scheduleImportRepository.SaveChangesAsync();
+            return NoContent();
+            
             // TODO: review return type
-            return BadRequest();
         }
 
         /// <summary>
@@ -135,14 +138,16 @@ namespace Izmainas.API.Controllers
         public async Task<ActionResult> ClearTeacherSchedulesAsync()
         {
             var items = await _scheduleImportRepository.GetTeacherSchedule();
-            if (items is not null)
+            if (items == null)
             {
-                await _scheduleImportRepository.ClearTeacherSchedules();
-                await _scheduleImportRepository.SaveChangesAsync();
-                return NoContent();
+                return BadRequest();
             }
+
+            await _scheduleImportRepository.ClearTeacherSchedules();
+            await _scheduleImportRepository.SaveChangesAsync();
+            return NoContent();
+            
             // TODO: review return type
-            return BadRequest();
         }
     }
 }

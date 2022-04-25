@@ -13,7 +13,7 @@ namespace Izmainas.API.Domain.Entities
         
         [Required]
         // string
-        public int Lesson { get; set; }
+        public string Lesson { get; set; }
         
         [Required]
         public int Day { get; set; }

@@ -38,10 +38,10 @@ namespace Izmainas.FileUploadService
             // Extract from Excel
             IExcelRepository excelRepository = new ExcelRepository();
             var studentItems = Task.Run(() => excelRepository.GetAllSAsync(
-                @"C:\Users\user\Desktop\school_shit\informatika\zpd\saraksti\final\student_schedule.xlsx", 0)).Result;
+                @"C:\Users\user\Desktop\Export\Ricards\school_shit\informatika\zpd\saraksti\final\student_schedule.xlsx", 0)).Result;
 
             var teacherItems = Task.Run(() => excelRepository.GetAllTAsync(
-                @"C:\Users\user\Desktop\school_shit\informatika\zpd\saraksti\final\teacher_schedule.xlsx", 0)).Result;
+                @"C:\Users\user\Desktop\Export\Ricards\school_shit\informatika\zpd\saraksti\final\teacher_schedule.xlsx", 0)).Result;
 
             // Map from Excel to DB entities
             var studentDbItems = new List<StudentScheduleItem>();

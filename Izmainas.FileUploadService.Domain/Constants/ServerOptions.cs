@@ -8,8 +8,8 @@ namespace Izmainas.FileUploadService.Domain.Constants
 {
     public static class ServerOptions
     {
-        public const string BaseAddress = "https://localhost:5001/";
-        public const string StudentsEndpoint = "studentSchedule";
-        public const string TeachersEndpoint = "teacherSchedule";
+        public const string BaseAddress = "https://localhost:5001/api/";
+        public const string StudentsEndpoint = "ScheduleImport/studentSchedule";
+        public const string TeachersEndpoint = "ScheduleImport/teacherSchedule";
     }
 }

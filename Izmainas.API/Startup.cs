@@ -34,8 +34,7 @@ namespace Izmainas.API
 
             // Data presentation services
             services.AddScoped<IStudentScheduleService, StudentScheduleService>();
-
-            // TODO: Add teahcer schedule service !!!
+            services.AddScoped<ITeacherScheduleService, TeacherScheduleService>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

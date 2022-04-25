@@ -25,7 +25,7 @@ namespace Izmainas.FileUploadService.Services
             try
             {
                 var request = new StudentScheduleRequest(items);
-                await Send(request, ServerOptions.StudentsEndpoint);
+                await Send(request, ServerOptions.BaseAddress + ServerOptions.StudentsEndpoint);
             }
             catch (NetworkException ex)
             {
@@ -39,7 +39,7 @@ namespace Izmainas.FileUploadService.Services
             try
             {
                 var request = new TeacherScheduleRequest(items);
-                await Send(request, ServerOptions.TeachersEndpoint);
+                await Send(request, ServerOptions.BaseAddress + ServerOptions.TeachersEndpoint);
             }
             catch (NetworkException ex)
             {
@@ -50,6 +50,8 @@ namespace Izmainas.FileUploadService.Services
 
         public async Task Send<U>(U item, string route)
         {
+            //_httpClient.BaseAddress = new Uri(ServerOptions.BaseAddress);
+
             var json = JsonSerializer.Serialize(item);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var result = await _httpClient.PostAsync(route, content);

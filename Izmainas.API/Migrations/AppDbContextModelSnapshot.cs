@@ -57,8 +57,9 @@ namespace Izmainas.API.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<int>("Lesson")
-                        .HasColumnType("int");
+                    b.Property<string>("Lesson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
                         .IsRequired()
@@ -82,8 +83,9 @@ namespace Izmainas.API.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<int>("Lesson")
-                        .HasColumnType("int");
+                    b.Property<string>("Lesson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TeacherName")
                         .IsRequired()
