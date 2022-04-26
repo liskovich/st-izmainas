@@ -8,6 +8,11 @@ namespace Izmainas.API.Domain.Contracts.Client
 {
     public class StudentScheduleResponse
     {
+        public Data Data { get; set; }
+    }
+
+    public class Data
+    {
         public Guid Id { get; set; }
         public string DayOfWeek { get; set; }
         public long Date { get; set; }

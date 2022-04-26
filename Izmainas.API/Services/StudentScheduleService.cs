@@ -29,8 +29,8 @@ namespace Izmainas.API.Services
         public async Task<StudentScheduleResponse> GetAsync(long date)
         {
             var dateTime = date.ToDateTime();
-            //var day = (int)dateTime.DayOfWeek;
-            var day = 1;
+            var day = (int)dateTime.DayOfWeek + 1;
+            //var day = 1;
 
             var studentSchedules = await _scheduleImportRepository.GetStudentSchedule(day);
             var teacherSchedules = await _scheduleImportRepository.GetTeacherSchedule(day);
@@ -39,11 +39,11 @@ namespace Izmainas.API.Services
             //
             var scheduleResponse = new StudentScheduleResponse();
             //scheduleResponse.Classes.Add(new StClassDto().Lessons.Add(new StLessonDto().Rooms.Add(new StRoomDto())));
-
+            var data = new Data();
             //
-            scheduleResponse.DayOfWeek = ((DayOfWeek)day).ToString();
-            scheduleResponse.Date = date;
-            scheduleResponse.Classes = new List<StClassDto>();
+            data.DayOfWeek = ((DayOfWeek)day).ToString();
+            data.Date = date;
+            data.Classes = new List<StClassDto>();
 
             var classesList = studentSchedules.Select(s => s.Class).Distinct();
             foreach (var c in classesList)
@@ -112,21 +112,34 @@ namespace Izmainas.API.Services
                                     NoteText = note.NoteText,
                                     CreatedDate = note.CreatedDate
                                 };
-                            } 
+                                stLesson.Rooms.Add(stRoom);
+
+                            }
                             else
                             {
                                 stRoom.Note = null;
                             }
-                            stLesson.Rooms.Add(stRoom);
+                            //stLesson.Rooms.Add(stRoom);
                             // TODO: review why not all rooms filled
                         }
 
-
+                        
                     }
-                    stClass.Lessons.Add(stLesson);
+
+                    if (stLesson.Rooms.Count != 0)
+                    {
+                        stClass.Lessons.Add(stLesson);
+                    }
+                    //stClass.Lessons.Add(stLesson);
                 }
-                scheduleResponse.Classes.Add(stClass);
-            }           
+
+                if (stClass.Lessons.Count != 0)
+                {
+                    data.Classes.Add(stClass);
+                }
+
+                //data.Classes.Add(stClass);
+            }
 
 
             //foreach (var studentSchedule in studentSchedules)
@@ -143,9 +156,127 @@ namespace Izmainas.API.Services
 
             //throw new NotImplementedException();
             // some code
+            scheduleResponse.Data = data;
             return scheduleResponse;
         }
 
-        
+        public async Task<StudentScheduleResponse> GetFullAsync(long date)
+        {
+            var dateTime = date.ToDateTime();
+            var day = (int)dateTime.DayOfWeek + 1;
+            //var day = 1;
+
+            var studentSchedules = await _scheduleImportRepository.GetStudentSchedule(day);
+            var teacherSchedules = await _scheduleImportRepository.GetTeacherSchedule(day);
+            var notes = await _notesRepository.GetAllNotesByDateAsync(date);
+
+            //
+            var scheduleResponse = new StudentScheduleResponse();
+            //scheduleResponse.Classes.Add(new StClassDto().Lessons.Add(new StLessonDto().Rooms.Add(new StRoomDto())));
+            var data = new Data();
+            //
+            data.DayOfWeek = ((DayOfWeek)day).ToString();
+            data.Date = date;
+            data.Classes = new List<StClassDto>();
+
+            var classesList = studentSchedules.Select(s => s.Class).Distinct();
+            foreach (var c in classesList)
+            {
+                var stClass = new StClassDto()
+                {
+                    ClassNumber = c,
+                    Lessons = new List<StLessonDto>()
+                };
+
+                var lessonsForClass = studentSchedules.Where(s => s.Class == c);
+                foreach (var l in lessonsForClass)
+                {
+                    var stLesson = new StLessonDto()
+                    {
+                        LessonNumber = long.Parse(l.Lesson),
+                        Rooms = new List<StRoomDto>()
+                    };
+
+                    var roomsForLesson = lessonsForClass
+                        //.Where(r => r.Class == c)
+                        .Where(r => r.Lesson == l.Lesson);
+
+                    foreach (var r in roomsForLesson)
+                    {
+                        var separatedRoomSubject = ScheduleFormatHelpers.SeparateSubjectFromRoom(r.Subject);
+                        var teachers = teacherSchedules
+                            .Where(t => t.Class == c)
+                            .Where(t => t.Lesson == l.Lesson);
+
+                        var notesForRoom = notes
+                            .Where(n => n.Class == c)
+                            .Where(n => n.Lesson == int.Parse(l.Lesson))
+                            .Where(n => n.CreatedDate == date);
+
+                        // sus
+                        //if (teachers.Count() < separatedRoomSubject.Rooms.Count())
+                        //{
+                        //    //
+                        //}
+
+                        for (int i = 0; i < separatedRoomSubject.Rooms.Count() - 1; i++)
+                        {
+                            var stRoom = new StRoomDto()
+                            {
+                                RoomNumber = separatedRoomSubject.Rooms[i],
+                                Subject = separatedRoomSubject.Subjects[i],
+                                TeacherName = teachers.ElementAt(i).TeacherName
+                            };
+
+                            // TODO: review teacher part (if multiple teachers)
+                            //stRoom.TeacherName = teachers.FirstOrDefault().TeacherName;
+
+                            // TODO: review if multiple notes possible
+                            if (notesForRoom == null)
+                            {
+                                stRoom.Note = null;
+                            }
+                            var note = notesForRoom.FirstOrDefault();
+
+                            if (note != null)
+                            {
+                                stRoom.Note = new StNoteDto()
+                                {
+                                    NoteId = note.Id,
+                                    NoteText = note.NoteText,
+                                    CreatedDate = note.CreatedDate
+                                };
+                            }
+                            else
+                            {
+                                stRoom.Note = null;
+                            }
+                            stLesson.Rooms.Add(stRoom);
+                            // TODO: review why not all rooms filled
+                        }
+                    }
+                    stClass.Lessons.Add(stLesson);
+                }
+                data.Classes.Add(stClass);
+            }
+
+
+            //foreach (var studentSchedule in studentSchedules)
+            //{
+            //    var sClass = studentSchedule.Class;
+            //    var sLessons = studentSchedule.Lesson;
+            //    //var sDay = ((DayOfWeek)studentSchedule.Day).ToString();
+            //    var sSubject = studentSchedule.Subject;
+            //    var sId = studentSchedule.Id;
+            //}
+            //
+
+            // implement method
+
+            //throw new NotImplementedException();
+            // some code
+            scheduleResponse.Data = data;
+            return scheduleResponse;
+        }
     }
 }

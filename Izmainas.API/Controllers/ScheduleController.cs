@@ -34,5 +34,17 @@ namespace Izmainas.API.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("/full")]
+        public async Task<ActionResult<StudentScheduleResponse>> GetStudentScheduleFullToday()
+        {
+            var timestamp = DateTime.Today.ToTimestamp();
+            var result = await _studentScheduleService.GetFullAsync(timestamp);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }

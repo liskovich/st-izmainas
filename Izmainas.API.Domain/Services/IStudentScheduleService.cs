@@ -9,5 +9,6 @@ namespace Izmainas.API.Domain.Services
 {
     public interface IStudentScheduleService : IService<StudentScheduleResponse>
     {
+        Task<StudentScheduleResponse> GetFullAsync(long date);
     }
 }

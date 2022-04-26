@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Izmainas.API.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Izmainas.API.Profiles.Resolvers
         /// <returns>Resolved unix timestamp</returns>
         public long Resolve(object source, object destination, long destMember, ResolutionContext context)
         {
-            return DateTimeOffset.Now.ToUnixTimeSeconds();
+            return DateTime.Today.ToTimestamp();
         }
     }
 }

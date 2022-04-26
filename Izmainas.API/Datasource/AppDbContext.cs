@@ -2,7 +2,7 @@ using Izmainas.API.Domain.Entities;
 // using Izmainas.API.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Izmainas.API.Data
+namespace Izmainas.API.Datasource
 {
     /// <summary>
     /// Application persistence level context

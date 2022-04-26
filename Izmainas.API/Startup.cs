@@ -1,5 +1,5 @@
 using System.Reflection;
-using Izmainas.API.Data;
+using Izmainas.API.Datasource;
 using Izmainas.API.Domain.Configuration;
 using Izmainas.API.Domain.Constants;
 using Izmainas.API.Domain.Services;
@@ -50,6 +50,13 @@ namespace Izmainas.API
                         Version = swaggerOptions.Version 
                     });
             });
+
+            services.AddCors(o => o.AddPolicy("CorsApi", builder =>
+            {
+                builder.WithOrigins("http://localhost:4200")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -69,7 +76,7 @@ namespace Izmainas.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("CorsApi");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
