@@ -10,7 +10,7 @@ namespace Izmainas.API.Domain.Contracts.Client.Teacher
     {
         public long LessonNumber { get; set; }
         public string Class { get; set; }
-        public long Room { get; set; }
+        public string Room { get; set; } // long
         public TcNoteDto Note { get; set; }
     }
 }

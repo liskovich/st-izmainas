@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Izmainas.API.Domain.Contracts.Client;
+using Izmainas.API.Domain.Contracts.Client.Teacher;
 using Izmainas.API.Domain.Services;
 using Izmainas.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,12 @@ namespace Izmainas.API.Controllers
     public class ScheduleController : ControllerBase
     {
         private readonly IStudentScheduleService _studentScheduleService;
+        private readonly ITeacherScheduleService _teacherScheduleService;
 
-        public ScheduleController(IStudentScheduleService studentScheduleService)
+        public ScheduleController(IStudentScheduleService studentScheduleService, ITeacherScheduleService teacherScheduleService)
         {
             _studentScheduleService = studentScheduleService;
+            _teacherScheduleService = teacherScheduleService;
         }
 
         [HttpGet]
@@ -46,5 +49,18 @@ namespace Izmainas.API.Controllers
             }
             return Ok(result);
         }
+
+        //[HttpGet()]
+        //[Route("api/tt")]
+        //public async Task<ActionResult<TeacherScheduleResponse>> GetTeacherScheduleToday()
+        //{
+        //    var timestamp = DateTime.Today.ToTimestamp();
+        //    var result = await _teacherScheduleService.GetAsync(timestamp);
+        //    if (result == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(result);
+        //}
     }
 }

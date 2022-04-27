@@ -1,4 +1,4 @@
-﻿using Izmainas.API.Domain.Contracts.Client;
+﻿using Izmainas.API.Domain.Contracts.Client.Teacher;
 using System;
 using System.Collections.Generic;
 using System.Linq;
