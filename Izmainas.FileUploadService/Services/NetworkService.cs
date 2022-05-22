@@ -11,6 +11,9 @@ using Izmainas.FileUploadService.Domain.Services;
 
 namespace Izmainas.FileUploadService.Services
 {
+    /// <summary>
+    /// Class used for sending data to API
+    /// </summary>
     public class NetworkService : INetworkService
     {
         private readonly HttpClient _httpClient;
@@ -20,6 +23,10 @@ namespace Izmainas.FileUploadService.Services
             _httpClient = httpClient;
         }
 
+        /// <summary>
+        /// Method used for sending student schedule data to API
+        /// </summary>
+        /// <param name="items">Student data to send</param>        
         public async Task SendAllSAsync(List<StudentScheduleDto> items)
         {
             try
@@ -29,11 +36,14 @@ namespace Izmainas.FileUploadService.Services
             }
             catch (NetworkException ex)
             {
-                // TODO: replace with proper handling
                 Console.WriteLine(ex.Message);
             }
         }
 
+        /// <summary>
+        /// Method used for sending teacher schedule data to API
+        /// </summary>
+        /// <param name="items">Teacher data to send</param>   
         public async Task SendAllTAsync(List<TeacherScheduleDto> items)
         {
             try
@@ -43,15 +53,12 @@ namespace Izmainas.FileUploadService.Services
             }
             catch (NetworkException ex)
             {
-                // TODO: replace with proper handling
                 Console.WriteLine(ex.Message);
             }
         }
 
         public async Task Send<U>(U item, string route)
         {
-            //_httpClient.BaseAddress = new Uri(ServerOptions.BaseAddress);
-
             var json = JsonSerializer.Serialize(item);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var result = await _httpClient.PostAsync(route, content);

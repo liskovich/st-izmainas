@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Izmainas.API.Services
 {
+    /// <summary>
+    /// Class responsible for getting all Student schedule data from database and transforming it into API response
+    /// </summary>
     public class StudentScheduleService : IStudentScheduleService
     {
         private readonly IMapper _mapper;
@@ -26,21 +29,23 @@ namespace Izmainas.API.Services
             _notesRepository = notesRepository;
         }
 
+        /// <summary>
+        /// Method used for response object generation (Show schedule changes for students in the webpage) - SHOWS ONLY THOSE CLASSES THAT HAVE ANY CHANGES
+        /// </summary>
+        /// <param name="date">Date to generate for</param>
+        /// <returns>Student schedule response object</returns>
         public async Task<StudentScheduleResponse> GetAsync(long date)
         {
             var dateTime = date.ToDateTime();
             var day = (int)dateTime.DayOfWeek + 1;
-            //var day = 1;
 
             var studentSchedules = await _scheduleImportRepository.GetStudentSchedule(day);
             var teacherSchedules = await _scheduleImportRepository.GetTeacherSchedule(day);
             var notes = await _notesRepository.GetAllNotesByDateAsync(date);
 
-            //
             var scheduleResponse = new StudentScheduleResponse();
-            //scheduleResponse.Classes.Add(new StClassDto().Lessons.Add(new StLessonDto().Rooms.Add(new StRoomDto())));
             var data = new Data();
-            //
+            
             data.DayOfWeek = ((DayOfWeek)day).ToString();
             data.Date = date;
             data.Classes = new List<StClassDto>();
@@ -64,7 +69,6 @@ namespace Izmainas.API.Services
                     };
 
                     var roomsForLesson = lessonsForClass
-                        //.Where(r => r.Class == c)
                         .Where(r => r.Lesson == l.Lesson);
 
                     foreach (var r in roomsForLesson)
@@ -79,12 +83,6 @@ namespace Izmainas.API.Services
                             .Where(n => n.Lesson == int.Parse(l.Lesson))
                             .Where(n => n.CreatedDate == date);
 
-                        // sus
-                        //if (teachers.Count() < separatedRoomSubject.Rooms.Count())
-                        //{
-                        //    //
-                        //}
-
                         for (int i = 0; i < separatedRoomSubject.Rooms.Count() - 1; i++)
                         {
                             var stRoom = new StRoomDto()
@@ -94,10 +92,6 @@ namespace Izmainas.API.Services
                                 TeacherName = teachers.ElementAt(i).TeacherName
                             };
 
-                            // TODO: review teacher part (if multiple teachers)
-                            //stRoom.TeacherName = teachers.FirstOrDefault().TeacherName;
-
-                            // TODO: review if multiple notes possible
                             if (notesForRoom == null)
                             {
                                 stRoom.Note = null;
@@ -119,62 +113,42 @@ namespace Izmainas.API.Services
                             {
                                 stRoom.Note = null;
                             }
-                            //stLesson.Rooms.Add(stRoom);
-                            // TODO: review why not all rooms filled
-                        }
-
-                        
+                        }                        
                     }
 
                     if (stLesson.Rooms.Count != 0)
                     {
                         stClass.Lessons.Add(stLesson);
                     }
-                    //stClass.Lessons.Add(stLesson);
                 }
 
                 if (stClass.Lessons.Count != 0)
                 {
                     data.Classes.Add(stClass);
                 }
-
-                //data.Classes.Add(stClass);
             }
 
-
-            //foreach (var studentSchedule in studentSchedules)
-            //{
-            //    var sClass = studentSchedule.Class;
-            //    var sLessons = studentSchedule.Lesson;
-            //    //var sDay = ((DayOfWeek)studentSchedule.Day).ToString();
-            //    var sSubject = studentSchedule.Subject;
-            //    var sId = studentSchedule.Id;
-            //}
-            //
-
-            // implement method
-
-            //throw new NotImplementedException();
-            // some code
             scheduleResponse.Data = data;
             return scheduleResponse;
         }
 
+        /// <summary>
+        /// Method used for response object generation (Show schedule changes for students in the webpage)
+        /// </summary>
+        /// <param name="date">Date to generate for</param>
+        /// <returns>Student schedule response object</returns>
         public async Task<StudentScheduleResponse> GetFullAsync(long date)
         {
             var dateTime = date.ToDateTime();
             var day = (int)dateTime.DayOfWeek + 1;
-            //var day = 1;
 
             var studentSchedules = await _scheduleImportRepository.GetStudentSchedule(day);
             var teacherSchedules = await _scheduleImportRepository.GetTeacherSchedule(day);
             var notes = await _notesRepository.GetAllNotesByDateAsync(date);
 
-            //
             var scheduleResponse = new StudentScheduleResponse();
-            //scheduleResponse.Classes.Add(new StClassDto().Lessons.Add(new StLessonDto().Rooms.Add(new StRoomDto())));
             var data = new Data();
-            //
+            
             data.DayOfWeek = ((DayOfWeek)day).ToString();
             data.Date = date;
             data.Classes = new List<StClassDto>();
@@ -198,7 +172,6 @@ namespace Izmainas.API.Services
                     };
 
                     var roomsForLesson = lessonsForClass
-                        //.Where(r => r.Class == c)
                         .Where(r => r.Lesson == l.Lesson);
 
                     foreach (var r in roomsForLesson)
@@ -213,12 +186,6 @@ namespace Izmainas.API.Services
                             .Where(n => n.Lesson == int.Parse(l.Lesson))
                             .Where(n => n.CreatedDate == date);
 
-                        // sus
-                        //if (teachers.Count() < separatedRoomSubject.Rooms.Count())
-                        //{
-                        //    //
-                        //}
-
                         for (int i = 0; i < separatedRoomSubject.Rooms.Count() - 1; i++)
                         {
                             var stRoom = new StRoomDto()
@@ -228,10 +195,6 @@ namespace Izmainas.API.Services
                                 TeacherName = teachers.ElementAt(i).TeacherName
                             };
 
-                            // TODO: review teacher part (if multiple teachers)
-                            //stRoom.TeacherName = teachers.FirstOrDefault().TeacherName;
-
-                            // TODO: review if multiple notes possible
                             if (notesForRoom == null)
                             {
                                 stRoom.Note = null;
@@ -252,7 +215,6 @@ namespace Izmainas.API.Services
                                 stRoom.Note = null;
                             }
                             stLesson.Rooms.Add(stRoom);
-                            // TODO: review why not all rooms filled
                         }
                     }
                     stClass.Lessons.Add(stLesson);
@@ -260,21 +222,6 @@ namespace Izmainas.API.Services
                 data.Classes.Add(stClass);
             }
 
-
-            //foreach (var studentSchedule in studentSchedules)
-            //{
-            //    var sClass = studentSchedule.Class;
-            //    var sLessons = studentSchedule.Lesson;
-            //    //var sDay = ((DayOfWeek)studentSchedule.Day).ToString();
-            //    var sSubject = studentSchedule.Subject;
-            //    var sId = studentSchedule.Id;
-            //}
-            //
-
-            // implement method
-
-            //throw new NotImplementedException();
-            // some code
             scheduleResponse.Data = data;
             return scheduleResponse;
         }

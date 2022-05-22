@@ -36,18 +36,5 @@ namespace Izmainas.API.Datasource
             modelBuilder.Entity<TeacherScheduleItem>()
             .HasKey(t => t.Id);            
         }
-
-        // public DbSet<Schedule> Schedules { get; set; }
-
-        // // fixed
-        // public DbSet<Class> Classes { get; set; }
-        
-        // // fixed
-        // public DbSet<Lesson> Lessons { get; set; }
-        
-        // // fixed
-        // public DbSet<Room> Room { get; set; }
-        
-        // public DbSet<Note> Notes { get; set; }
     }
 }

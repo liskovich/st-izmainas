@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Izmainas.API.Controllers
 {
+    /// <summary>
+    /// API controller for Teacher schedule manipulation
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherScheduleController : ControllerBase
@@ -19,6 +22,10 @@ namespace Izmainas.API.Controllers
             _teacherScheduleService = teacherScheduleService;
         }
 
+        /// <summary>
+        /// Method used for retrieving current teacher schedule - ONLY FOR TEACHERS WHO HAVE ANY CHANGES
+        /// </summary>
+        /// <returns>Success response containing teacher schedule from service or failure status</returns>
         [HttpGet]        
         public async Task<ActionResult<TeacherScheduleResponse>> GetTeacherScheduleToday()
         {

@@ -27,7 +27,6 @@ namespace Izmainas.API.Services
         /// </summary>
         public async Task ClearStudentSchedules()
         {
-            // TODO: review clear method
             _context.StudentItems.RemoveRange(await GetStudentSchedule());
             await _context.SaveChangesAsync();            
         }
@@ -37,7 +36,6 @@ namespace Izmainas.API.Services
         /// </summary>
         public async Task ClearTeacherSchedules()
         {
-            // TODO: review clear method
             _context.TeacherItems.RemoveRange(await GetTeacherSchedule());
             await _context.SaveChangesAsync();
         }
@@ -49,7 +47,6 @@ namespace Izmainas.API.Services
         /// <returns>A list of student schedules</returns>
         public async Task<IEnumerable<StudentScheduleItem>> GetStudentSchedule([Optional] int day)
         {
-            // TODO: check optional parameter specific
             if (day != 0)
             {
                 return await _context.StudentItems.Where(i => i.Day == day).ToListAsync();                
@@ -64,7 +61,6 @@ namespace Izmainas.API.Services
         /// <returns>A list of teacher schedules</returns>
         public async Task<IEnumerable<TeacherScheduleItem>> GetTeacherSchedule([Optional] int day)
         {
-            // TODO: check optional parameter specific
             if (day != 0)
             {
                 return await _context.TeacherItems.Where(i => i.Day == day).ToListAsync();                

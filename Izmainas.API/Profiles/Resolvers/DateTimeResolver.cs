@@ -12,7 +12,6 @@ namespace Izmainas.API.Profiles.Resolvers
     /// </summary>
     public class DateTimeResolver : IValueResolver<object, object, long>
     {
-        // TODO: refactor generated time
         /// <summary>
         /// Method for automatically setting destination date
         /// </summary>

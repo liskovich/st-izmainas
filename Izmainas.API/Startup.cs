@@ -39,6 +39,8 @@ namespace Izmainas.API
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddControllers();
+
+            // OpenAPI configuration
             services.AddSwaggerGen(c =>
             {
                 var swaggerOptions = Configuration.GetSection(nameof(SwaggerOptions)).Get<SwaggerOptions>();

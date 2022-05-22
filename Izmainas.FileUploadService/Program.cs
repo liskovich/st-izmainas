@@ -9,7 +9,6 @@ using Izmainas.FileUploadService.Domain.Dtos;
 using Izmainas.FileUploadService.Domain.Entities;
 using Izmainas.FileUploadService.Domain.Services;
 using Izmainas.FileUploadService.Services;
-using Izmainas.FileUploadService.Workers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +22,6 @@ namespace Izmainas.FileUploadService
     {
         public static void Main(string[] args)
         {
-            // TODO: refactor app build process
             var app = CreateHostBuilder(args).Build();
 
             Log.Logger = new LoggerConfiguration()
@@ -32,16 +30,12 @@ namespace Izmainas.FileUploadService
                 .Enrich.FromLogContext()
                 .WriteTo.File(LogMessages.BuildLogFileLocation())
                 .CreateLogger();
-
-            // TODO: test code - remove later
             
             // Extract from Excel
             IExcelRepository excelRepository = new ExcelRepository();
-            var studentItems = Task.Run(() => excelRepository.GetAllSAsync(
-                @"C:\Users\user\Desktop\Export\Ricards\school_shit\informatika\zpd\saraksti\final\student_schedule.xlsx", 0)).Result;
+            var studentItems = Task.Run(() => excelRepository.GetAllSAsync(@"ScheduleRaw\student_schedule.xlsx", 0)).Result;
 
-            var teacherItems = Task.Run(() => excelRepository.GetAllTAsync(
-                @"C:\Users\user\Desktop\Export\Ricards\school_shit\informatika\zpd\saraksti\final\teacher_schedule.xlsx", 0)).Result;
+            var teacherItems = Task.Run(() => excelRepository.GetAllTAsync(@"ScheduleRaw\teacher_schedule.xlsx", 0)).Result;
 
             // Map from Excel to DB entities
             var studentDbItems = new List<StudentScheduleItem>();
@@ -76,8 +70,6 @@ namespace Izmainas.FileUploadService
             var services = scope.ServiceProvider;
             ISqliteRepository sqliteRepository = new SqliteRepository(services.GetService<AppDbContext>());
             Task.Run(() => sqliteRepository.EnsureDatabaseCreated());
-            //Task.Run(() => sqliteRepository.InsertStudentSchedulesAsync(studentDbItems));
-            //Task.Run(() => sqliteRepository.InsertTeacherSchedulesAsync(teacherDbItems));
 
             // Retrieve from DB
             var studentExportItems = Task.Run(() => sqliteRepository.GetAllSAsync()).Result;
@@ -103,13 +95,9 @@ namespace Izmainas.FileUploadService
             networkService.SendAllSAsync(studentDtos);
             networkService.SendAllTAsync(teacherDtos);
 
-            // TODO: test code - remove later
-
             try
             {
                 Log.Information(LogMessages.InfoMessages.StartingService);
-                
-                // TODO: refactor app build process
                 app.Run();
                 return;
             }
@@ -121,7 +109,7 @@ namespace Izmainas.FileUploadService
             finally
             {
                 Log.CloseAndFlush();
-            }            
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -131,22 +119,12 @@ namespace Izmainas.FileUploadService
                     options.ServiceName = ServiceInfo.ServiceName;
                 })
                 .ConfigureServices((hostContext, services) =>
-                {
-                    // TODO: setup the hosted service
-                    //services.AddHostedService<TestWorker>();
-
-                    // TODO: register http client factory
-                    //services.AddHttpClient<TestWorker>();
-                    
-                    // TODO: register automapper                    
-
+                {                 
                     services.AddDbContext<AppDbContext>(
                         options => options.UseSqlite(SqliteConstants.BuildConnectionString()));
                     
-                    // TODO: review service lifetime
                     services.AddScoped<ISqliteRepository, SqliteRepository>();
                     services.AddScoped<IExcelRepository, ExcelRepository>();
-                    //
                     
                     services.AddHttpClient<INetworkService, NetworkService>(c =>
                     {

@@ -19,7 +19,6 @@ namespace Izmainas.API.Controllers
     [Route("api/[controller]")]
     public class NotesController : ControllerBase
     {
-        // TODO: refactor notes repostiory and note dto
         private readonly INotesRepository _notesRepository;
         private readonly IMapper _mapper;
 

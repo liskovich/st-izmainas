@@ -5,18 +5,18 @@ using System.Linq;
 
 namespace Izmainas.API.Helpers
 {
+    /// <summary>
+    /// Class used to format schedule data before sending it to end user
+    /// </summary>
     public static class ScheduleFormatHelpers
     {
-        public static SeparatedResult SeparateSubjectFromRoom(string input) //this
+        /// <summary>
+        /// Method used for splitting combined rooms and subjects each into their separate rows in UI
+        /// </summary>
+        /// <param name="input">String which contains concatinated rooms and subjects</param>
+        /// <returns>Separated room and subject pair</returns>
+        public static SeparatedResult SeparateSubjectFromRoom(string input)
         {
-            //var result = input.Split('&', StringSplitOptions.TrimEntries);
-            //var output = new SeparatedResult();
-
-            //output.Subjects = result[0].Split('/', StringSplitOptions.RemoveEmptyEntries);
-            //output.Rooms = result[1].Split('/', StringSplitOptions.RemoveEmptyEntries);
-
-            //return output;
-
             var result = input.Split('&', StringSplitOptions.TrimEntries);
             var output = new SeparatedResult();
 
@@ -57,33 +57,11 @@ namespace Izmainas.API.Helpers
 
             return output;
         }
-
-        public static IEnumerable<TreeItem<T>> GetTreeItems<T, K>(
-            this IEnumerable<T> collection, 
-            Func<T, K> idSelector,
-            Func<T, K> parentIdSelector,
-            K rootId = default(K))
-        {
-            foreach (var c in collection.Where(c => EqualityComparer<K>.Default.Equals(parentIdSelector(c), rootId)))
-            {
-                yield return new TreeItem<T>
-                {
-                    Item = c,
-                    Children = collection.GetTreeItems(idSelector, parentIdSelector, idSelector(c))
-                };
-            }
-        }
     }
 
     public class SeparatedResult
     {
         public List<string> Subjects { get; set; }
         public List<string> Rooms { get; set; }
-    }
-
-    public class TreeItem<T>
-    {
-        public T Item { get; set; }
-        public IEnumerable<TreeItem<T>> Children { get; set; }
     }
 }

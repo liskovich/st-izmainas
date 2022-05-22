@@ -11,8 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Izmainas.API.Controllers
 {
-    // TODO: completely refactor schedule controller
-
+    /// <summary>
+    /// API controller for Student schedule manipulation
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class ScheduleController : ControllerBase
@@ -26,6 +27,10 @@ namespace Izmainas.API.Controllers
             _teacherScheduleService = teacherScheduleService;
         }
 
+        /// <summary>
+        /// Method used for retrieving current student schedule - ONLY FOR CLASSES THAT HAVE ANY CHANGES
+        /// </summary>
+        /// <returns>Success response containing student schedule from service or failure status</returns>
         [HttpGet]
         public async Task<ActionResult<StudentScheduleResponse>> GetStudentScheduleToday()
         {
@@ -38,6 +43,10 @@ namespace Izmainas.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Method used for retrieving current student schedule - FULL
+        /// </summary>
+        /// <returns>Success response containing student schedule from service or failure status</returns>
         [HttpGet("/full")]
         public async Task<ActionResult<StudentScheduleResponse>> GetStudentScheduleFullToday()
         {
@@ -49,18 +58,5 @@ namespace Izmainas.API.Controllers
             }
             return Ok(result);
         }
-
-        //[HttpGet()]
-        //[Route("api/tt")]
-        //public async Task<ActionResult<TeacherScheduleResponse>> GetTeacherScheduleToday()
-        //{
-        //    var timestamp = DateTime.Today.ToTimestamp();
-        //    var result = await _teacherScheduleService.GetAsync(timestamp);
-        //    if (result == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(result);
-        //}
     }
 }

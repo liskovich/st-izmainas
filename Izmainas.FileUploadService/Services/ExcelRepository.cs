@@ -10,11 +10,19 @@ using NPOI.SS.UserModel;
 
 namespace Izmainas.FileUploadService.Services
 {
+    /// <summary>
+    /// Class used for retrieving raw data from .xlsx spreadsheets
+    /// </summary>
     public class ExcelRepository : IExcelRepository
     {
-        public async Task<List<StudentScheduleExcelDto>> GetAllSAsync(string path, int sheet) //GetStudentScheduleFromExcelAndSaveAsync
+        /// <summary>
+        /// Method used for retrieving all student data from spreadsheet
+        /// </summary>
+        /// <param name="path">Path to .xlsx file</param>
+        /// <param name="sheet">Sheet index</param>
+        /// <returns>Parsed data</returns>
+        public async Task<List<StudentScheduleExcelDto>> GetAllSAsync(string path, int sheet)
         {
-            // TODO: save to local db
             var studentSchedule = await GetAllAsync<StudentScheduleExcelDto>(path, sheet);
             studentSchedule.ForEach(s =>
             {
@@ -24,9 +32,14 @@ namespace Izmainas.FileUploadService.Services
             return studentSchedule;
         }
 
+        /// <summary>
+        /// Method used for retrieving all teacher data from spreadsheet
+        /// </summary>
+        /// <param name="path">Path to .xlsx file</param>
+        /// <param name="sheet">Sheet index</param>
+        /// <returns>Parsed data</returns>
         public async Task<List<TeacherScheduleExcelDto>> GetAllTAsync(string path, int sheet)        
         {
-            // TODO: save to local db
             var teacherSchedule = await GetAllAsync<TeacherScheduleExcelDto>(path, sheet);
             return teacherSchedule;
         }
@@ -34,15 +47,15 @@ namespace Izmainas.FileUploadService.Services
         private async Task<List<T>> GetAllAsync<T>(string path, int sheet) where T : class
         {
             IWorkbook workbook;
-            List<T> result = new(); // StudentScheduleExcelDto
+            List<T> result = new();
 
-            using (FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read)) //StudentScheduleFilePath
+            using (FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 workbook = WorkbookFactory.Create(file);
             }
 
             var importer = new Mapper(workbook);
-            var items = importer.Take<T>(sheet); //StudentScheduleExcelDto
+            var items = importer.Take<T>(sheet);
             foreach (var item in items)
             {
                 var row = item.Value;
