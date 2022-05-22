@@ -1,5 +1,5 @@
 # Stundu Izmaiņas RV1ģ
-Project for showing school schedule cahnges both for students and teachers in a convenient way
+Project for showing school schedule changes both for students and teachers in a convenient way.
 
 ### Izmainas.API.Domain
 Contains business specific entities, dtos, constants and service abstractions.
